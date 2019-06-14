@@ -23,9 +23,17 @@ public class ProxyUtils {
         if(!method.getName().startsWith("list")){
             throw new RuntimeException("不支持的方法");
         }
+        System.out.println("正式返回类型"+method.getGenericReturnType());
+        System.out.println(method.getReturnType());
+        System.out.println(method.getGenericParameterTypes());
+        System.out.println(method.getParameterTypes());
+        System.out.println(method.getTypeParameters());
+        //得到method正式的返回类型
         ParameterizedType returnType =(ParameterizedType) method.getGenericReturnType();
+        //获得类型参数的第一个
         Type actualTypeArgument = returnType.getActualTypeArguments()[0];
         return (Class<?>)actualTypeArgument;
+
     }
 
 
@@ -128,6 +136,7 @@ public class ProxyUtils {
             preparedStatement.setObject(i+1,args[i]);
         }
         ResultSet rs = preparedStatement.executeQuery();
+
         List<String> columns=getColumns(rs);
         List<T> list=new ArrayList<>();
         while(rs.next()){

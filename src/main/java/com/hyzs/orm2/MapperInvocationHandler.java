@@ -11,7 +11,6 @@ public class MapperInvocationHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         String sql= ProxyUtils.getSql(method);
-        System.out.println("sql:"+sql);
         Class<?> clazz=ProxyUtils.getReturnType(method);
         return ProxyUtils.exeQuery(sql,args,clazz);
     }
